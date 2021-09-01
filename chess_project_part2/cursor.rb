@@ -1,4 +1,5 @@
 require "io/console"
+require "byebug"
 
 KEYMAP = {
   " " => :space,
@@ -76,19 +77,24 @@ class Cursor
   end
 
   def handle_key(key)
+    # debugger
     case key
-    when :return || :space
+    when :return, :space
+      # debugger
         return @cursor_pos
-    when :right || :left || :up || :down
-        self.update_pos(MOVES[key])
+    when :right, :left, :up, :down
+      # debugger
+        update_pos(MOVES[key])
         return nil
     when :ctrl_c
+      # debugger
         Process.exit(0)
     end
 
   end
 
   def update_pos(diff)
+    # debugger
     new_pos = [@cursor_pos.first + diff.first, @cursor_pos.last + diff.last]
     @cursor_pos = new_pos if @board.valid_move?(new_pos)
   end

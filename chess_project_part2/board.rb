@@ -2,7 +2,7 @@ require_relative "piece.rb"
 require_relative "modules.rb"
 require "byebug"
 class Board
-    attr_reader :row
+    attr_reader :rows
     # def self.setup_board
     #     arr = Array.new(8) {Array.new(8)}
 
@@ -30,7 +30,7 @@ class Board
     def initialize
         @rows = Array.new(8) {Array.new(8)}
         pieces = [Rook, Knight, Bishop, King, Queen, Bishop, Knight, Rook]
-        symbols = [:R, :Kn, :B, :Kg, :Q, :B, :Kn, :R]
+        symbols = [:R, :k, :B, :K, :Q, :B, :k, :R]
 
         @rows.each.with_index do |row, i|
             if i == 1
