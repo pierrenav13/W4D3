@@ -78,6 +78,24 @@ class Board
         pos.all? {|ele| ele >= 0 && ele <= 7}
     end
 
+    def in_check?(color)
+        @rows.each do |row|
+            row.each do |space|
+                if space.is_a?(King) && space.color == color
+                    king_pos = space.pos
+                end
+            end
+        end
+
+        @rows.each do |row|
+            row.each do |space|
+                return true if space.moves.include?(king_pos) && space.color != color
+            end
+        end
+        false
+
+    end
+
     def inspect
         {
         rows: @rows.map {|row| row.map{|ele| ele.symbol}}
