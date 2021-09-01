@@ -1,3 +1,5 @@
+class CoffeeError < StandardError; end
+
 # PHASE 2
 def convert_to_int(str)
   Integer(str)
@@ -9,8 +11,10 @@ FRUITS = ["apple", "banana", "orange"]
 def reaction(maybe_fruit)
   if FRUITS.include? maybe_fruit
     puts "OMG, thanks so much for the #{maybe_fruit}!"
+  elsif maybe_fruit == "coffee"
+    raise CoffeeError.new
   else 
-    raise StandardError 
+    raise StandardError
   end 
 end
 
@@ -18,13 +22,23 @@ def feed_me_a_fruit
   puts "Hello, I am a friendly monster. :)"
 
   puts "Feed me a fruit! (Enter the name of a fruit:)"
-  maybe_fruit = gets.chomp
-  reaction(maybe_fruit) 
+
+  begin
+    maybe_fruit = gets.chomp
+    reaction(maybe_fruit)
+  rescue CoffeeError
+    puts "You gave me coffee, so you can try again!"
+    retry
+  end
 end  
 
 # PHASE 4
 class BestFriend
   def initialize(name, yrs_known, fav_pastime)
+    raise "Sorry, we're not best friends yet!" if yrs_known < 5
+    raise "No name was passed" if name.length <= 0
+    raise "No pastime was passed" if fav_pastime.length <= 0
+
     @name = name
     @yrs_known = yrs_known
     @fav_pastime = fav_pastime
