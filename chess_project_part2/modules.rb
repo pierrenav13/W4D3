@@ -9,7 +9,7 @@ module Stepable
                 moves << possible_move
             end
         end
-        moves
+        moves.select {|ele| self.board.valid_move?(ele)}
     end
 
     private
@@ -20,11 +20,13 @@ end
 module Slidable
 
     def moves
-        moves = []
-        self.move_dirs.each do |ele|
-            moves << [self.pos.first + ele.first, self.pos.last + ele.last]
-        end
-        moves
+        # moves = []
+        # self.move_dirs.each do |ele|
+        #     moves << [self.pos.first + ele.first, self.pos.last + ele.last]
+        # end
+        # moves.select {|ele| self.board.valid_move?(ele)}
+        dirs = self.move_dirs
+        dirs.select {|ele| self.board.valid_move?(ele)}
     end
     
     def horizontal_dirs
@@ -42,10 +44,18 @@ module Slidable
         end
         directions
     end
-    
+
+    def get_diagonal
+        self.diagonal_dirs
+    end
+
+    def get_horizontal
+        self.horizontal_dirs
+    end
+
     def grow_unblocked_moves_in_dir(dx, dy)
         moves = []
-        x,y = pos
+        x,y = self.pos
         new_pos = [x+dx, y+dy]
         while self.board[new_pos].is_a?(NullPiece) || self.board[new_pos].color != self.color
             moves << new_pos

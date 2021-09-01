@@ -1,6 +1,7 @@
 require_relative 'modules.rb'
 require_relative "board.rb"
 require "singleton"
+require "byebug"
 
 class Piece 
     attr_reader :pos, :color, :board
@@ -77,7 +78,7 @@ class Rook < Piece
 
     protected
     def move_dirs
-        self.horizontal_dirs
+        self.get_horizontal
     end
 end
 
@@ -92,7 +93,7 @@ class Bishop < Piece
 
     protected
     def move_dirs
-        self.diagonal_dirs
+        self.get_diagonal
     end
 end
 
@@ -107,7 +108,7 @@ class Queen < Piece
 
     protected
     def move_dirs
-        self.horizontal_dirs + self.diagonal_dirs
+        self.get_diagonal + self.get_horizontal
     end
 end
 
@@ -149,7 +150,7 @@ class Pawn < Piece
         result
     end
 
-    
+    private
     def at_start_row?
         @pos.first == 1
     end
